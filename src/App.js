@@ -1,6 +1,6 @@
 import { Segment } from 'semantic-ui-react';
 import './App.css';
-import FormCliente from './views/cliente/FormeClienta';
+import FormCliente from './views/produto/formProduto';
 
 function App() {
 
