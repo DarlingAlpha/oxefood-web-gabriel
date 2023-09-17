@@ -4,9 +4,9 @@ import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon, Radio, Select } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 const Op = [
-    { key: 'm', text: 'Male', value: 'male' },
-    { key: 'f', text: 'Female', value: 'female' },
-    { key: 'o', text: 'Other', value: 'other' },
+    { key: 'm', text: 'Macho', value: 'male' },
+    { key: 'f', text: 'Fêmea', value: 'female' },
+    { key: 'o', text: 'Outros', value: 'other' },
   ]
 
 export default function FormEntregador () {
@@ -49,7 +49,7 @@ export default function FormEntregador () {
 
                 <Container textAlign='justified' >
 
-                    <h2> <span style={{color: 'darkgray'}}> Produto &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
+                    <h2> <span style={{color: 'darkgray'}}> Entregador &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
 
                     <Divider />
 
@@ -72,8 +72,9 @@ export default function FormEntregador () {
                                     required
                                     fluid
                                     width={5}
-                                    label='CPF'>
-                                        value={cpf}onChange={e => setCpf(e.target.value)}
+                                    label='CPF'
+                                    value={cpf}onChange={e => setCpf(e.target.value)}
+                                    >
                                     <InputMask
                                         required
                                         mask="999.999.999-99"
@@ -83,8 +84,9 @@ export default function FormEntregador () {
                                     required
                                     fluid
                                     width={4}
-                                    label='RG'>
+                                    label='RG'
                                         value={rg}onChange={e => setRg(e.target.value)}
+                                        >
                                     <InputMask
                                         required
                                         mask='99.999.999-9'
@@ -113,8 +115,9 @@ export default function FormEntregador () {
                                     required
                                     fluid
                                     label='Fone Celular'
-                                    width={6}>
+                                    width={6}
                                         value={foneCelular}onChange={e => setFoneCelular(e.target.value)}
+                                        >
                                     <InputMask 
                                         mask="(99) 9999.9999"
                                         
@@ -124,8 +127,9 @@ export default function FormEntregador () {
                                     required
                                     fluid
                                     label='Fone Fixo'
-                                    width={6}>
+                                    width={6}
                                         value={foneFixo}onChange={e => setFoneFixo(e.target.value)}
+                                        >
                                     <InputMask 
                                         mask="(99) 9999.9999"
                                         
@@ -197,7 +201,7 @@ export default function FormEntregador () {
                                 </Form.Input>
                         </Form.Group>
                         <Form.Group widths='equal'>
-                        <Form.Field
+                        <Form.Field 
         control={Select}
         options={Op}
         label={{ children: 'UF', htmlFor: 'form-select-control-gender' }}
@@ -215,18 +219,20 @@ export default function FormEntregador () {
     </Form.Group>
     <Form.Group>
     <label>Ativo :</label>
-          <Form.Field
+          <Form.Field  name='reply'
             control={Radio}
             label='Sim'
             value='1'
-            
-            
+            inverted
+            icon
+            labelPosition='left'
           />
           <Form.Field
             control={Radio}
             label='Não'
             value='2'
-            
+            icon
+            labelPosition='left'
           />
     </Form.Group>
     
@@ -243,7 +249,7 @@ export default function FormEntregador () {
                                 color='orange'
                             >
                                 <Icon name='reply' />
-                                Listar
+                               Voltar
                             </Button>
                                 
                             <Button
