@@ -43,20 +43,12 @@ export default function FormCliente () {
                                 </Form.Input>
 
                             </Form.Group>
+
+        <Form.TextArea label='Descrição' placeholder='Informe a descrição do produto' />
                             
                             <Form.Group>
-
                                 <Form.Input
-                                    fluid
-                                    label='descrição'
-                                    width={7}>
-                                    <InputMask 
-                    
-                                        placeholder="informe a descrição do produto"
-                                    /> 
-                                </Form.Input>
-
-                                <Form.Input
+                                    required
                                     fluid
                                     label='Valor unitario'
                                     width={6}>
