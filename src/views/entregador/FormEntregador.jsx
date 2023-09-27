@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import InputMask from 'react-input-mask';
+import { Link } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon, Radio, Select } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 const Op = [
@@ -30,9 +31,9 @@ export default function FormEntregador () {
              foneFixo: foneFixo,
              qtdEntregasRealizadas:qtdEntregasRealizadas
         }
-        axios.post("http://localhost:8082/api/cliente", entregadorRequest)
+        axios.post("http://localhost:8082/api/Entregador", entregadorRequest)
 		.then((response) => {
-		     console.log('Cliente cadastrado com sucesso.')
+		     console.log('Entregador cadastrado com sucesso.')
 		})
 		.catch((error) => {
 		     console.log('Erro ao incluir o um cliente.')
@@ -249,6 +250,7 @@ export default function FormEntregador () {
                                 color='orange'
                             >
                                 <Icon name='reply' />
+                                <Link to={'/list-entregador'}>Voltar</Link>
                                Voltar
                             </Button>
                                 

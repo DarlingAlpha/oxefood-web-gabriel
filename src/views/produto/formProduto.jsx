@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import InputMask from 'react-input-mask';
+import { Link } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 export default function FormCliente () {
@@ -23,7 +24,7 @@ export default function FormCliente () {
             tempoEntregaMaximo: tempoEntregaMaximo,
         }
 
-        axios.post("http://localhost:8082/api/cliente", produtoRequest)
+        axios.post("http://localhost:8082/api/produto", produtoRequest)
 		.then((response) => {
 		     console.log('Cliente cadastrado com sucesso.')
 		})
@@ -132,6 +133,7 @@ export default function FormCliente () {
                                 color='orange'
                             >
                                 <Icon name='reply' />
+                                <Link to={'/list-produto'}>Voltar</Link>
                                 Listar
                             </Button>
                                 
