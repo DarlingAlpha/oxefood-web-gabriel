@@ -31,7 +31,7 @@ export default function FormEntregador () {
              foneFixo: foneFixo,
              qtdEntregasRealizadas:qtdEntregasRealizadas
         }
-        axios.post("http://localhost:8082/api/entregador", entregadorRequest)
+        axios.post("http://localhost:8080/api/entregador", entregadorRequest)
 		.then((response) => {
 		     console.log('Entregador cadastrado com sucesso.')
 		})

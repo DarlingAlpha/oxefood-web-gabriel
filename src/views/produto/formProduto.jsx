@@ -24,7 +24,7 @@ export default function FormCliente () {
             tempoEntregaMaximo: tempoEntregaMaximo,
         }
 
-        axios.post("http://localhost:8082/api/produto", produtoRequest)
+        axios.post("http://localhost:8080/api/produto", produtoRequest)
 		.then((response) => {
 		     console.log('Cliente cadastrado com sucesso.')
 		})
