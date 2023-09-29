@@ -4,105 +4,106 @@ import { Link } from "react-router-dom";
 import { Button, Container, Divider, Icon, Table } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 
-export default function ListEntregador () {
+export default function ListEntregador() {
 
-   const [lista, setLista] = useState([]);
+    const [lista, setLista] = useState([]);
 
-   useEffect(() => {
-       carregarLista();
-   }, [])
+    useEffect(() => {
+        carregarLista();
+    }, [])
 
-   function carregarLista() {
+    function carregarLista() {
 
-       axios.get("http://localhost:8080/api/entregador")
-       .then((response) => {
-           setLista(response.data)
-       })
-   }
-   function formatarData(dataParam) {
-
-    if (dataParam === null || dataParam === '' || dataParam === undefined) {
-        return ''
+        axios.get("http://localhost:8080/api/entregador")
+            .then((response) => {
+                setLista(response.data)
+            })
     }
+    function formatarData(dataParam) {
 
-    let arrayData = dataParam.split('-');
-    return arrayData[2] + '/' + arrayData[1] + '/' + arrayData[0];
-}
-return(
-    <div>
-        <MenuSistema />
-        <div style={{marginTop: '3%'}}>
+        if (dataParam === null || dataParam === '' || dataParam === undefined) {
+            return ''
+        }
 
-            <Container textAlign='justified' >
+        let arrayData = dataParam.split('-');
+        return arrayData[2] + '/' + arrayData[1] + '/' + arrayData[0];
+    }
+    return (
+        <div>
+            <MenuSistema />
+            <div style={{ marginTop: '3%' }}>
 
-                <h2> Cliente </h2>
-                <Divider />
+                <Container textAlign='justified' >
 
-                <div style={{marginTop: '4%'}}>
-                    <Button
-                        label='Novo'
-                        circular
-                        color='orange'
-                        icon='clipboard outline'
-                        floated='right'
-                        as={Link}
-                        to='/form-entregador'
-                    />
-   <br/><br/><br/>
-                  
-                  <Table color='orange' sortable celled>
+                    <h2> Entregador </h2>
+                    <Divider />
 
-                      <Table.Header>
-                          <Table.Row>
-                              <Table.HeaderCell>Nome</Table.HeaderCell>
-                              <Table.HeaderCell>CPF</Table.HeaderCell>
-                              <Table.HeaderCell>Data de Nascimento</Table.HeaderCell>
-                              <Table.HeaderCell>Fone Celular</Table.HeaderCell>
-                              <Table.HeaderCell>Fone Fixo</Table.HeaderCell>
-                              <Table.HeaderCell>qtdEntregasRealizadas</Table.HeaderCell>
-                              <Table.HeaderCell textAlign='center'>Ações</Table.HeaderCell>
-                          </Table.Row>
-                      </Table.Header>
-                 
-                      <Table.Body>
+                    <div style={{ marginTop: '4%' }}>
+                        <Button
+                            label='Novo'
+                            circular
+                            color='orange'
+                            icon='clipboard outline'
+                            floated='right'
+                            as={Link}
+                            to='/form-entregador'
+                        />
+                        <br /><br /><br />
 
-                          { lista.map(entregador => (
+                        <Table color='orange' sortable celled>
 
-                              <Table.Row key={entregador.nome}>
-                                  <Table.Cell>{entregador.cpf}</Table.Cell>
-                                  <Table.Cell>{formatarData(entregador.dataNascimento)}</Table.Cell>
-                                  <Table.Cell>{entregador.foneCelular}</Table.Cell>
-                                  <Table.Cell>{entregador.foneFixo}</Table.Cell>
-                                  <Table.Cell>{entregador.qtdEntregasRealizadas}</Table.Cell>
-                                  <Table.Cell textAlign='center'>
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell>Nome</Table.HeaderCell>
+                                    <Table.HeaderCell>CPF</Table.HeaderCell>
+                                    <Table.HeaderCell>Data de Nascimento</Table.HeaderCell>
+                                    <Table.HeaderCell>Fone Celular</Table.HeaderCell>
+                                    <Table.HeaderCell>Fone Fixo</Table.HeaderCell>
+                                    <Table.HeaderCell>qtdEntregasRealizadas</Table.HeaderCell>
+                                    <Table.HeaderCell textAlign='center'>Ações</Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
 
-                                      <Button
-                                          inverted
-                                          circular
-                                          color='green'
-                                          title='Clique aqui para editar os dados deste cliente'
-                                          icon>
-                                               <Icon name='edit' />
-                                      </Button> &nbsp;
-                                      <Button
-                                               inverted
-                                               circular
-                                               color='red'
-                                               title='Clique aqui para remover este cliente'
-                                               icon>
-                                                   <Icon name='trash' />
-                                           </Button>
+                            <Table.Body>
 
-                                       </Table.Cell>
-                                   </Table.Row>
-                               ))}
+                                {lista.map(entregador => (
 
-                           </Table.Body>
-                       </Table>
-                   </div>
-               </Container>
-           </div>
+                                    <Table.Row key={entregador.id}>
+                                        <Table.Cell>{entregador.nome}</Table.Cell>
+                                        <Table.Cell>{entregador.cpf}</Table.Cell>
+                                        <Table.Cell>{formatarData(entregador.dataNascimento)}</Table.Cell>
+                                        <Table.Cell>{entregador.foneCelular}</Table.Cell>
+                                        <Table.Cell>{entregador.foneFixo}</Table.Cell>
+                                        <Table.Cell>{entregador.qtdEntregasRealizadas}</Table.Cell>
+                                        <Table.Cell textAlign='center'>
 
-       </div>
-   )
+                                            <Button
+                                                inverted
+                                                circular
+                                                color='green'
+                                                title='Clique aqui para editar os dados deste entregador'
+                                                icon>
+                                                <Link to="/form-entregador" state={{ id: entregador.id }} style={{ color: 'green' }}> <Icon name='edit' /> </Link>
+                                            </Button> &nbsp;
+                                            <Button
+                                                inverted
+                                                circular
+                                                color='red'
+                                                title='Clique aqui para remover este entregador'
+                                                icon>
+                                                <Icon name='trash' />
+                                            </Button>
+
+                                        </Table.Cell>
+                                    </Table.Row>
+                                ))}
+
+                            </Table.Body>
+                        </Table>
+                    </div>
+                </Container>
+            </div>
+
+        </div>
+    )
 }
