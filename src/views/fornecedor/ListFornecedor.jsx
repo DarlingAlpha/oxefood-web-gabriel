@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button, Container, Divider, Header, Icon, Modal, Table } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 
-export default function ListCliente() {
+export default function ListFornecedor() {
 
     const [lista, setLista] = useState([]);
     const [openModal, setOpenModal] = useState(false);

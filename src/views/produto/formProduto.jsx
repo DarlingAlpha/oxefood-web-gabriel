@@ -4,7 +4,7 @@ import InputMask from 'react-input-mask';
 import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
-export default function FormCliente() {
+export default function FormProduto() {
     const { state } = useLocation();
     const [idProduto, setidProduto] = useState();
 
@@ -14,8 +14,12 @@ export default function FormCliente() {
     const [valorUnitario, setValorUnitario] = useState();
     const [tempoEntregaMinimo, setTempoEntregaMinimo] = useState();
     const [tempoEntregaMaximo, setTempoEntregaMaximo] = useState();
+    const [listaCategoria, setListaCategoria] = useState([]);
+    const [idCategoria, setIdCategoria] = useState();
+
 
     useEffect(() => {
+
 
         if (state != null && state.id != null) {
 
@@ -28,12 +32,23 @@ export default function FormCliente() {
                     setValorUnitario(response.data.valorUnitario)
                     setTempoEntregaMaximo(response.data.tempoEntregaMinimo)
                     setTempoEntregaMinimo(response.data.tempoEntregaMaximo)
+                    setIdCategoria(response.data.categoria.id)
+
                 })
         }
+        axios.get("http://localhost:8080/api/CategoriaProduto")
+            .then((response) => {
+                const dropDownCategorias = response.data.map(c => ({ text: c.descricao, value: c.id }));
+                setListaCategoria(dropDownCategorias);
+            })
+
+
+
     }, [state])
     function salvar() {
 
         let produtoRequest = {
+            idCategoria: idCategoria,
             codigo: codigo,
             titulo: titulo,
             descricao: descricao,
@@ -99,6 +114,20 @@ export default function FormCliente() {
                                 </Form.Input>
 
                             </Form.Group>
+                            <Form.Select
+                                required
+                                fluid
+                                tabIndex='3'
+                                placeholder='Selecione'
+                                label='Categoria'
+                                options={listaCategoria}
+                                value={idCategoria}
+                                onChange={(e, { value }) => {
+                                    setIdCategoria(value)
+                                }}
+                            />
+
+
 
                             <Form.TextArea label='Descrição' placeholder='Informe a descrição do produto'
                                 value={descricao} onChange={e => setDescricao(e.target.value)}

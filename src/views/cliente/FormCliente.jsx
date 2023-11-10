@@ -30,7 +30,7 @@ export default function FormCliente() {
         }
 
     }, [state])
-    
+
     function formatarData(dataParam) {
 
         if (dataParam === null || dataParam === '' || dataParam === undefined) {
