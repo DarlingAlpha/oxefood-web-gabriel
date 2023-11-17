@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Container, Divider, Header, Icon, Modal, Table } from 'semantic-ui-react';
+import { Button, Container, Divider, Header, Icon, Modal, Table, Menu, Segment,Form } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 
 export default function ListCliente() {
@@ -9,6 +9,13 @@ export default function ListCliente() {
     const [lista, setLista] = useState([]);
     const [openModal, setOpenModal] = useState(false);
     const [idRemover, setIdRemover] = useState();
+    // aula 24//
+    const [menuFiltro, setMenuFiltro] = useState();
+    const [codigo, setCodigo] = useState();
+    const [titulo, setTitulo] = useState();
+    const [idCategoria, setIdCategoria] = useState();
+    const [listaCategoriaCliente, setListaCategoriaCliente] = useState([]);
+
 
     useEffect(() => {
         carregarLista();
@@ -20,6 +27,19 @@ export default function ListCliente() {
             .then((response) => {
                 setLista(response.data)
             })
+        axios.get("http://localhost:8080/api/CategoriaCliente")
+            .then((response) => {
+
+                const dropDownCategorias = [];
+                dropDownCategorias.push({ text: '', value: '' });
+                response.data.map(c => (
+                    dropDownCategorias.push({ text: c.descricao, value: c.id })
+                ))
+
+                setListaCategoriaCliente(dropDownCategorias)
+
+            })
+
     }
     function formatarData(dataParam) {
 
@@ -52,6 +72,53 @@ export default function ListCliente() {
             })
         setOpenModal(false)
     }
+    function handleMenuFiltro() {
+
+        if (menuFiltro === true) {
+            setMenuFiltro(false);
+        } else {
+            setMenuFiltro(true);
+        }
+    }
+
+    function handleChangeCodigo(value) {
+
+        filtrarCliente(value, titulo, idCategoria);
+    }
+
+    function handleChangeTitulo(value) {
+
+        filtrarCliente(codigo, value, idCategoria);
+    }
+
+    function handleChangeCategoriaCliente(value) {
+
+        filtrarCliente(codigo, titulo, value);
+    }
+    async function filtrarCliente(codigoParam, tituloParam, idCategoriaParam) {
+
+        let formData = new FormData();
+
+        if (codigoParam !== undefined) {
+            setCodigo(codigoParam)
+            formData.append('codigo', codigoParam);
+        }
+        if (tituloParam !== undefined) {
+            setTitulo(tituloParam)
+            formData.append('titulo', tituloParam);
+        }
+        if (idCategoriaParam !== undefined) {
+            setIdCategoria(idCategoriaParam)
+            formData.append('idCategoria', idCategoriaParam);
+        }
+
+        await axios.post("http://localhost:8080/api/cliente/filtrar", formData)
+            .then((response) => {
+                setLista(response.data)
+            })
+    }
+
+
 
 
     return (
@@ -65,6 +132,16 @@ export default function ListCliente() {
                     <Divider />
 
                     <div style={{ marginTop: '4%' }}>
+                    <Menu compact>
+                               <Menu.Item
+                                   name='menuFiltro'
+                                   active={menuFiltro === true}
+                                   onClick={() => handleMenuFiltro()}
+                               >
+                                   <Icon name='filter' />
+                                   Filtrar
+                               </Menu.Item>
+                           </Menu>
                         <Button
                             label='Novo'
                             circular
@@ -74,6 +151,43 @@ export default function ListCliente() {
                             as={Link}
                             to='/form-cliente'
                         />
+                        { menuFiltro ?
+                            
+                            <Segment>
+                                <Form className="form-filtros">
+                                    
+                                    <Form.Input
+                                        icon="search"
+                                        value={codigo}
+                                        onChange={e => handleChangeCodigo(e.target.value)}
+                                        label='Código do Produto'
+                                        placeholder='Filtrar por Código do Produto'
+                                        labelPosition='left'
+                                        width={4}
+                                    />
+                                        <Form.Group widths='equal'>                   
+                <Form.Input
+                    icon="search"
+                    value={titulo}
+                    onChange={e => handleChangeTitulo(e.target.value)}
+                    label='Título'
+                    placeholder='Filtrar por título'
+                    labelPosition='left'
+                />
+                <Form.Select
+                    placeholder='Filtrar por Categoria'
+                    label='Categoria'
+                    options={listaCategoriaCliente}
+                    value={idCategoria}
+                    onChange={(e,{value}) => {handleChangeCategoriaCliente(value)}}
+                />
+                
+            </Form.Group>
+        </Form>
+    </Segment>:""
+}
+
+
                         <br /><br /><br />
 
                         <Table color='orange' sortable celled>
