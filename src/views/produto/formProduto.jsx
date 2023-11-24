@@ -4,6 +4,7 @@ import InputMask from 'react-input-mask';
 import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
+import { mensagemErro, notifyError, notifySuccess } from '../../views/util/Util';
 export default function FormProduto() {
     const { state } = useLocation();
     const [idProduto, setidProduto] = useState();
@@ -63,8 +64,19 @@ export default function FormProduto() {
                 .catch((error) => { console.log('Erro ao alter um produto.') })
         } else { //Cadastro:
             axios.post("http://localhost:8080/api/produto", produtoRequest)
-                .then((response) => { console.log('Produto cadastrado com sucesso.') })
-                .catch((error) => { console.log('Erro ao incluir o produto.') })
+                .then((response) => {
+                    notifySuccess('Cliente cadastrado com sucesso.')
+                })
+
+                .catch((error) => {
+                    if (error.response) {
+                        notifyError(error.response.data.errors[0].defaultMessage)
+
+                    } else {
+                        notifyError(mensagemErro)
+                    }
+                })
+
         }
     }
     return (
@@ -143,9 +155,7 @@ export default function FormProduto() {
                                     width={6}
                                     value={valorUnitario} onChange={e => setValorUnitario(e.target.value)}
                                 >
-                                    <InputMask
-
-                                    />
+                                    
                                 </Form.Input>
 
                                 <Form.Input

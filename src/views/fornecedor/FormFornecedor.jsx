@@ -4,6 +4,7 @@ import InputMask from 'react-input-mask';
 import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
+import { mensagemErro, notifyError, notifySuccess } from '../../views/util/Util';
 /*id Long EntidadeNegocio
 ...
 versao Long EntidadeAuditavel
@@ -69,8 +70,18 @@ export default function FormFornecedor() {
                 .catch((error) => { console.log('Erro ao alter um Fornecedor.') })
         } else { //Cadastro:
             axios.post("http://localhost:8080/api/fornecedor", fornecedorRequest)
-                .then((response) => { console.log('Fornecedor cadastrado com sucesso.') })
-                .catch((error) => { console.log('Erro ao incluir o fornecedor.') })
+                .then((response) => {
+                    notifySuccess('Cliente cadastrado com sucesso.')
+                })
+
+                .catch((error) => {
+                    if (error.response) {
+                        notifyError(error.response.data.error)
+                        console.log(error.response)
+                    } else {
+                        notifyError(mensagemErro)
+                    }
+                })
         }
     }
 
