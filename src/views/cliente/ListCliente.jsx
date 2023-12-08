@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Container, Divider, Header, Icon, Modal, Table, Menu, Segment,Form } from 'semantic-ui-react';
+import { Button, Container, Divider, Form, Header, Icon, Menu, Modal, Segment, Table } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 
 export default function ListCliente() {
@@ -41,15 +41,7 @@ export default function ListCliente() {
             })
 
     }
-    function formatarData(dataParam) {
 
-        if (dataParam === null || dataParam === '' || dataParam === undefined) {
-            return ''
-        }
-
-        let arrayData = dataParam.split('-');
-        return arrayData[2] + '/' + arrayData[1] + '/' + arrayData[0];
-    }
 
     function confirmaRemover(id) {
         setOpenModal(true)
@@ -132,16 +124,16 @@ export default function ListCliente() {
                     <Divider />
 
                     <div style={{ marginTop: '4%' }}>
-                    <Menu compact>
-                               <Menu.Item
-                                   name='menuFiltro'
-                                   active={menuFiltro === true}
-                                   onClick={() => handleMenuFiltro()}
-                               >
-                                   <Icon name='filter' />
-                                   Filtrar
-                               </Menu.Item>
-                           </Menu>
+                        <Menu compact>
+                            <Menu.Item
+                                name='menuFiltro'
+                                active={menuFiltro === true}
+                                onClick={() => handleMenuFiltro()}
+                            >
+                                <Icon name='filter' />
+                                Filtrar
+                            </Menu.Item>
+                        </Menu>
                         <Button
                             label='Novo'
                             circular
@@ -151,11 +143,11 @@ export default function ListCliente() {
                             as={Link}
                             to='/form-cliente'
                         />
-                        { menuFiltro ?
-                            
+                        {menuFiltro ?
+
                             <Segment>
                                 <Form className="form-filtros">
-                                    
+
                                     <Form.Input
                                         icon="search"
                                         value={codigo}
@@ -165,27 +157,27 @@ export default function ListCliente() {
                                         labelPosition='left'
                                         width={4}
                                     />
-                                        <Form.Group widths='equal'>                   
-                <Form.Input
-                    icon="search"
-                    value={titulo}
-                    onChange={e => handleChangeTitulo(e.target.value)}
-                    label='Título'
-                    placeholder='Filtrar por título'
-                    labelPosition='left'
-                />
-                <Form.Select
-                    placeholder='Filtrar por Categoria'
-                    label='Categoria'
-                    options={listaCategoriaCliente}
-                    value={idCategoria}
-                    onChange={(e,{value}) => {handleChangeCategoriaCliente(value)}}
-                />
-                
-            </Form.Group>
-        </Form>
-    </Segment>:""
-}
+                                    <Form.Group widths='equal'>
+                                        <Form.Input
+                                            icon="search"
+                                            value={titulo}
+                                            onChange={e => handleChangeTitulo(e.target.value)}
+                                            label='Título'
+                                            placeholder='Filtrar por título'
+                                            labelPosition='left'
+                                        />
+                                        <Form.Select
+                                            placeholder='Filtrar por Categoria'
+                                            label='Categoria'
+                                            options={listaCategoriaCliente}
+                                            value={idCategoria}
+                                            onChange={(e, { value }) => { handleChangeCategoriaCliente(value) }}
+                                        />
+
+                                    </Form.Group>
+                                </Form>
+                            </Segment> : ""
+                        }
 
 
                         <br /><br /><br />
@@ -210,7 +202,7 @@ export default function ListCliente() {
                                     <Table.Row key={cliente.id}>
                                         <Table.Cell>{cliente.nome}</Table.Cell>
                                         <Table.Cell>{cliente.cpf}</Table.Cell>
-                                        <Table.Cell>{formatarData(cliente.dataNascimento)}</Table.Cell>
+                                        <Table.Cell>{(cliente.dataNascimento)}</Table.Cell>
                                         <Table.Cell>{cliente.foneCelular}</Table.Cell>
                                         <Table.Cell>{cliente.foneFixo}</Table.Cell>
                                         <Table.Cell textAlign='center'>

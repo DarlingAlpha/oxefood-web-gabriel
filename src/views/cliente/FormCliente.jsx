@@ -64,7 +64,8 @@ export default function FormCliente() {
 
                 .catch((error) => {
                     if (error.response) {
-                        notifyError(error.response.data.errors[0].defaultMessage)
+                        notifyError(error.response.data.error)
+                        console.log(error.response)
                     } else {
                         notifyError(mensagemErro)
                     }
@@ -113,11 +114,14 @@ export default function FormCliente() {
                                 <Form.Input
                                     required
                                     fluid
-                                    label='CPF'>
+                                    label='CPF'
+                                    value={cpf} onChange={e => setCpf(e.target.value)}
+                                    >
+                                        
                                     <InputMask
                                         required
                                         mask="999.999.999-99"
-                                        value={cpf} onChange={e => setCpf(e.target.value)}
+                                        
                                     />
                                 </Form.Input>
 
