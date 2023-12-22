@@ -39,9 +39,16 @@ export default function FormProduto() {
         }
         axios.get("http://localhost:8080/api/CategoriaProduto")
             .then((response) => {
+                // Manipula a resposta da requisição bem-sucedida
+// Mapeia os dados da resposta para um novo formato
                 const dropDownCategorias = response.data.map(c => ({ text: c.descricao, value: c.id }));
+                // Atualiza o estado (ou alguma variável) com os dados mapeados
                 setListaCategoria(dropDownCategorias);
-            })
+            }) 
+            .catch((error) => {
+                // Manipula o erro, se a requisição não for bem-sucedida
+                console.error("Erro ao obter dados da API:", error);
+              });
 
 
 
